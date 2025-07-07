@@ -11,10 +11,9 @@ services:
     container_name: jenkins-blueocean
     restart: on-failure
     environment:
-      - DOCKER_HOST=unix://${DOCKER_SOCK}
+      - DOCKER_HOST=tcp://host.docker.internal:2375
     volumes:
       - jenkins-data:/var/jenkins_home
-      - ${DOCKER_SOCK}:${DOCKER_SOCK}
       - ${DEPLOY_VOLUME}:/var/jenkins_home/workspace/deploy
     ports:
       - "8080:8080"
