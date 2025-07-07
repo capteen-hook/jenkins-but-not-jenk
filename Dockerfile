@@ -1,5 +1,6 @@
 FROM jenkins/jenkins:2.504.3-jdk21
 USER root
+RUN groupadd -for -g 984 dockerhost && usermod -aG dockerhost jenkins
 RUN apt-get update && apt-get install -y lsb-release ca-certificates curl docker.io docker-compose && \
     install -m 0755 -d /etc/apt/keyrings && \
     curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc && \

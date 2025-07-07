@@ -2,11 +2,12 @@ volumes:
   jenkins-data:
 
 services:
+
   jenkins:
     build:
       context: .
       dockerfile: Dockerfile
-    user: "1000:984"
+    user: root
     image: myjenkins-blueocean:2.504.3-1
     container_name: jenkins-blueocean
     restart: on-failure
