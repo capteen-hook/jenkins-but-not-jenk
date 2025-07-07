@@ -2,7 +2,6 @@ volumes:
   jenkins-data:
 
 services:
-
   jenkins:
     build:
       context: .
@@ -12,10 +11,10 @@ services:
     container_name: jenkins-blueocean
     restart: on-failure
     environment:
-      DOCKER_HOST: 'unix:///var/run/docker.sock'
+      - DOCKER_HOST=unix://${DOCKER_SOCK}
     volumes:
       - jenkins-data:/var/jenkins_home
-      - ${DOCKER_SOCK}:/var/run/docker.sock
+      - ${DOCKER_SOCK}:${DOCKER_SOCK}
       - ${DEPLOY_VOLUME}:/var/jenkins_home/workspace/deploy
     ports:
       - "8080:8080"
