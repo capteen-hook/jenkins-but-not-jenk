@@ -1,30 +1,7 @@
-# networks:
-#   jenkins:
-#     driver: bridge
-
 volumes:
-  # jenkins-data:
-  # jenkins-docker-certs:
+  jenkins-data:
 
-# services:
-#   dind:
-#     image: docker:dind
-#     container_name: jenkins-docker
-#     privileged: true
-#     restart: always
-#     networks:
-#       jenkins:
-#         aliases:
-#           - docker
-#     environment:
-#       DOCKER_TLS_CERTDIR: /certs
-#     volumes:
-#       - jenkins-docker-certs:/certs/client
-#       - jenkins-data:/var/jenkins_home
-#     ports:
-#       - "2376:2376"
-#     command: --storage-driver overlay2
-
+services:
   jenkins:
     build:
       context: .
@@ -33,15 +10,10 @@ volumes:
     image: myjenkins-blueocean:2.504.3-1
     container_name: jenkins-blueocean
     restart: on-failure
-    # networks:
-    #   - jenkins
     environment:
       DOCKER_HOST: 'unix:///var/run/docker.sock'
-      # DOCKER_CERT_PATH: /certs/client
-      # DOCKER_TLS_VERIFY: "1"
     volumes:
       - jenkins-data:/var/jenkins_home
-      # - jenkins-docker-certs:/certs/client:ro
       - ${DOCKER_SOCK}:/var/run/docker.sock
       - ${DEPLOY_VOLUME}:/var/jenkins_home/workspace/deploy
     ports:
