@@ -1,7 +1,10 @@
 FROM jenkins/jenkins:2.504.3-jdk21
 USER root
 ARG JENKINS_GID=1000
-RUN groupadd -g ${JENKINS_GID} liam || true && usermod -a -G liam jenkins
+RUN if ! getent group 1000; then \
+    groupadd -g ${JENKINS_GID} jenkins; \
+    fi && \
+    usermod -g ${JENKINS_GID} jenkins && \
 RUN apt-get update && apt-get install -y lsb-release ca-certificates curl docker.io docker-compose && \
     install -m 0755 -d /etc/apt/keyrings && \
     curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc && \
